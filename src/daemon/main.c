@@ -14,7 +14,7 @@ extern int features_mask;
 // device.c
 extern int hwload_mode;
 static void quitWithLock(char mut);
-extern int restart();
+extern void restart();
 
 // Timespec utility function
 void timespec_add(struct timespec* timespec, long nanoseconds){
@@ -87,6 +87,7 @@ void localecase(char* dst, size_t length, const char* src){
 }
 
 int main(int argc, char** argv){
+
     // Set output pipes to buffer on newlines, if they weren't set that way already
     setlinebuf(stdout);
     setlinebuf(stderr);
@@ -227,8 +228,8 @@ int main(int argc, char** argv){
     return result;
 }
 
-int restart() {
+void restart() {
     ckb_err("restart called, running quit without mutex-lock.\n");
     quitWithLock(0);
-    return main(main_ac, main_av);
+    main(main_ac, main_av);
 }
